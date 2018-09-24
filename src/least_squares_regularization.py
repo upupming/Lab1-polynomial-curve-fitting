@@ -19,9 +19,9 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda):
     xlabel('x')
     ylabel('t')
     ylim(bottom=-1.2, top=1.2)
-    title(f'$t = \sin(2\pi x)$\n'
-        f'带惩罚项的最小二乘法拟合 \n $N = {numOfTraningDataPoints},'
-        f'M = {orderOfPolynomial}, \sigma = {sigmaOfNoise}, \ln\lambda = {lnOfLambda}$')
+    title(f'$t = \\sin(2\\pi x)$\n'
+        f'带惩罚项的最小二乘法拟合 \n $N = {numOfTraningDataPoints}, '
+        f'M = {orderOfPolynomial}, \\sigma = {sigmaOfNoise}, \\ln\\lambda = {lnOfLambda}$')
 
     # Get Vandermonde matrix X, see equation (8)
     matrixX = vander(vectorX_T, orderOfPolynomial+1, True)

@@ -44,9 +44,9 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, l
         iters += 1
 
 
-    title(f't = sin(2$\pi x$)\n'
+    title(f't = sin(2$\\pi x$)\n'
         f'梯度下降法拟合 \n N = {numOfTraningDataPoints},'
-        f'M = {orderOfPolynomial}, $\sigma$ = {sigmaOfNoise}, 学习率 $\\alpha$ = {learningRate}, 截止步长 = {precision}\n'
+        f'M = {orderOfPolynomial}, $\\sigma$ = {sigmaOfNoise}, 学习率 $\\alpha$ = {learningRate}, 截止步长 = {precision}\n'
         f'迭代次数: {iters} 次')
 
     # Print the solution for polynomial coefficients to file
@@ -77,5 +77,5 @@ train(numOfTraningDataPoints=4, orderOfPolynomial=2, sigmaOfNoise=0.2, lnOfLambd
 # Case 2
 train(numOfTraningDataPoints=10, orderOfPolynomial=3, sigmaOfNoise=0.2, lnOfLambda=-5, learningRate=0.01, precision=1e-10)
 
-# Case 2
+# Case 3
 train(numOfTraningDataPoints=10, orderOfPolynomial=9, sigmaOfNoise=0.2, lnOfLambda=-5, learningRate=0.000002, precision=1e-6)

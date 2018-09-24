@@ -1,4 +1,64 @@
+
+# <center>机器学习实验报告一——多项式拟合正弦函数</center>
+
+李一鸣
+
+2018 年 9 月 25 日
+
+https://upupming.site/Lab1-polynomial-curve-fitting/README.html
+
+- [<center>机器学习实验报告一——多项式拟合正弦函数</center>](#center%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E4%B8%80%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88%E6%AD%A3%E5%BC%A6%E5%87%BD%E6%95%B0center)
+- [多项式拟合正弦函数](#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88%E6%AD%A3%E5%BC%A6%E5%87%BD%E6%95%B0)
+  - [〇、数学符号格式规范](#%E3%80%87%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83)
+  - [一、实验目的](#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84)
+  - [二、实验要求及实验环境](#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82%E5%8F%8A%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83)
+    - [实验要求](#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82)
+    - [实验环境](#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83)
+      - [硬件](#%E7%A1%AC%E4%BB%B6)
+      - [软件](#%E8%BD%AF%E4%BB%B6)
+  - [三、设计思想](#%E4%B8%89%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3)
+    - [算法原理](#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86)
+      - [生成数据](#%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE)
+      - [最小二乘法](#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+        - [误差函数 $E(\mathrm{\mathbf{w}})$](#%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0-emathrmmathbfw)
+        - [最小化误差函数求得最优解 $\mathrm{\mathbf{w_{ML}}}$](#%E6%9C%80%E5%B0%8F%E5%8C%96%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0%E6%B1%82%E5%BE%97%E6%9C%80%E4%BC%98%E8%A7%A3-mathrmmathbfwml)
+      - [带惩罚项的最小二乘法](#%E5%B8%A6%E6%83%A9%E7%BD%9A%E9%A1%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+      - [梯度下降法](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)
+      - [共轭梯度法](#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95)
+  - [三、实验结果与分析](#%E4%B8%89%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%88%86%E6%9E%90)
+    - [最小二乘法](#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+      - [N = 40, M = 10](#n--40-m--10)
+      - [N = 40, M = 20](#n--40-m--20)
+      - [N = 40, M = 39](#n--40-m--39)
+      - [N = 20, M = 19](#n--20-m--19)
+    - [带惩罚项的最小二乘法](#%E5%B8%A6%E6%83%A9%E7%BD%9A%E9%A1%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+      - [N = 40, M = 10](#n--40-m--10)
+      - [N = 40, M = 20](#n--40-m--20)
+      - [N = 40, M = 39](#n--40-m--39)
+      - [N = 20, M = 19](#n--20-m--19)
+    - [梯度下降法](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)
+      - [N = 4, M = 2](#n--4-m--2)
+      - [N = 10, M = 3](#n--10-m--3)
+      - [N = 10, M = 9](#n--10-m--9)
+    - [共轭梯度法](#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95)
+      - [N = 4, M = 2](#n--4-m--2)
+      - [N = 10, M = 3](#n--10-m--3)
+      - [N = 10, M = 9](#n--10-m--9)
+  - [四、结论](#%E5%9B%9B%E7%BB%93%E8%AE%BA)
+  - [五、参考文献](#%E4%BA%94%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE)
+  - [七、附录：源代码（带注释）](#%E4%B8%83%E9%99%84%E5%BD%95%E6%BA%90%E4%BB%A3%E7%A0%81%E5%B8%A6%E6%B3%A8%E9%87%8A)
+    - [`data_generator.py`](#datageneratorpy)
+    - [`least_squares.py`](#leastsquarespy)
+    - [`least_squares_regularization.py`](#leastsquaresregularizationpy)
+    - [`gradient_descent.py`](#gradientdescentpy)
+    - [`conjugate_gradient.py`](#conjugategradientpy)
+
 # 多项式拟合正弦函数
+
+|班号|学号|姓名|
+|--|---|----|
+|1603103|1160300625|李一鸣|
+
 
 ## 〇、数学符号格式规范
 
@@ -25,7 +85,7 @@
 + [x] 生成数据，加入噪声
 + [x] 用高阶多项式函数拟合曲线
 + [x] 用解析解求解两种 loss 的最优解（无正则项和有正则项）
-+ [ ] 优化方法求解最优解（梯度下降，共轭梯度）
++ [x] 优化方法求解最优解（梯度下降，共轭梯度）
 + [x] 用你得到的实验数据，解释过拟合
 + [x] 用不同数据量，不同超参数，不同的多项式阶数，比较实验效果
 
@@ -302,9 +362,85 @@ $$(17)
 
 
 
+#### 共轭梯度法
+
+共轭梯度法是求解系数矩阵为对称正定矩阵的线性方程组的数值解的方法。共轭梯度法是一个迭代方法，它适用于系数矩阵为稀疏矩阵的线性方程组，因为使用像 Cholesky 分解这样的直接方法求解这些系统所需的计算量太大了。这种方程组在数值求解偏微分方程时很常见。<sup>[Conjugate gradient method | Wikipedia]</sup>
+
+现有正定对称矩阵 $\mathrm{\mathbf{A}}$，如果
+
+$$
+\mathrm{\mathbf{u}}^T\mathrm{\mathbf{A}}\mathrm{\mathbf{v}} = 0
+$$(18)
+
+成立，则称 $\mathrm{\mathbf{u}}$、$\mathrm{\mathbf{v}}$ 关于 $\mathrm{\mathbf{A}}$ 共轭,此时上式可用 $\langle\mathrm{\mathbf{u}}, \mathrm{\mathbf{v}}\rangle_\mathrm{\mathbf{A}}$ 表示。
+
+在上文中我们看到的 $\mathrm{\mathbf{X}}^T\mathrm{\mathbf{X}}$ 显然是满足正定且对称这个条件的，因为：
+
+$$
+\mathrm{\mathbf{P}}^T\mathrm{\mathbf{X}}^T\mathrm{\mathbf{X}}\mathrm{\mathbf{P}} = \left\|\mathrm{\mathbf{X}}\mathrm{\mathbf{P}}\right\|^2 > 0
+$$(正定性)
+
+$$
+(\mathrm{\mathbf{X}}^T\mathrm{\mathbf{X}})^T = \mathrm{\mathbf{X}}^T\mathrm{\mathbf{X}}
+$$(对称性)
+
+由式 (15) 在 $\mathrm{\mathbf{w}} = \mathrm{\mathbf{w_{ML}}}$ 时为 0 可得：
+
+$$
+\begin{aligned}
+  (\mathrm{\mathbf{X}}^T\mathrm{\mathbf{X}} + \lambda \mathrm{\mathbf{I}}_{(M+1)\times(M+1)})\mathrm{\mathbf{w_{ML}}} &= \mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}} \\
+  \mathrm{\mathbf{B}}\mathrm{\mathbf{w_{ML}}} &= \mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}}
+\end{aligned}
+$$(19)
+
+其中
+
+$$\mathrm{\mathbf{B}} = \mathrm{\mathbf{X}}^T\mathrm{\mathbf{X}} + \lambda \mathrm{\mathbf{I}}_{(M+1)\times(M+1)}$$(20)
+
+显然 $\mathrm{\mathbf{B}}$ 也是正定、对称的。
+
+
+定义矩阵 $\mathrm{\mathbf{P}} = (\mathrm{\mathbf{p_1}}, \mathrm{\mathbf{p_2}}, ...,  \mathrm{\mathbf{p_{M+1}}})$，其中的每一个向量都是关于 $\mathrm{\mathbf{B}}$ 共轭的，并且构成了一组基底，任何向量都可以由它们组合产生。先假设我们要求的 $\mathrm{\mathbf{w_{ML}}}$ 为：
+
+$$
+\mathrm{\mathbf{w_{ML}}} = \sum_{i=1}^{M+1} \alpha _i \mathrm{\mathbf{p_i}}
+$$(21)
+
+两边同乘 $\mathrm{\mathbf{B}}$ 有：
+
+$$
+\mathrm{\mathbf{B}}\mathrm{\mathbf{w_{ML}}} = \sum_{i=1}^{M+1} \alpha _i \mathrm{\mathbf{B}}\mathrm{\mathbf{p_i}}
+$$(22)
+
+再在两边同乘 $\mathrm{\mathbf{p_k}}^T$，有：
+
+$$
+\mathrm{\mathbf{p_k}}^T\mathrm{\mathbf{B}}\mathrm{\mathbf{w_{ML}}} = \sum_{i=1}^{M+1} \alpha _i \mathrm{\mathbf{p_k}}^T\mathrm{\mathbf{B}}\mathrm{\mathbf{p_i}}
+$$(23)
+
+由式 (19) 我们知道 $\mathrm{\mathbf{B}}\mathrm{\mathbf{w_{ML}}} = \mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}}$，从而：
+
+$$
+\mathrm{\mathbf{p_k}}^T\mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}} = \sum_{i=1}^{M+1} \alpha _i \langle\mathrm{\mathbf{p_k}}, \mathrm{\mathbf{p_i}}\rangle_\mathrm{\mathbf{B}}
+$$(24)
+
+用 $\langle \mathrm{\mathbf{u}}, \mathrm{\mathbf{v}}\rangle$ 表示 $\mathrm{\mathbf{u}}^T\mathrm{\mathbf{v}}$，同时使用共轭的已知条件 $\forall i \neq k: \langle \mathrm{\mathbf{p_k}}, \mathrm{\mathbf{p_i}} \rangle_\mathrm{\mathbf{B}} = 0$，可以得到：
+
+$$
+\langle \mathrm{\mathbf{p_k}}, \mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}}\rangle = \alpha _k \langle\mathrm{\mathbf{p_k}}, \mathrm{\mathbf{p_k}}\rangle_\mathrm{\mathbf{B}}
+$$(25)
+
+从而解得：
+
+$$
+\alpha _k = \frac{\langle \mathrm{\mathbf{p_k}}, \mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}}\rangle}{\langle\mathrm{\mathbf{p_k}}, \mathrm{\mathbf{p_k}}\rangle_\mathrm{\mathbf{B}}}
+$$(26)
+
+总结：利用共轭梯度法我们可以从 $\mathrm{\mathbf{p_0}}$ 开始逐渐向初始点的共轭方向逼近，加快求解效率。最优解由式 (20)、式 (21)、式 (26) 给出。
+
 ## 三、实验结果与分析
 
-#### 最小二乘法
+### 最小二乘法
 
 运行命令：
 
@@ -312,7 +448,7 @@ $$(17)
 $ make least_squares
 ```
 
-##### N = 40, M = 10
+#### N = 40, M = 10
 
 ![least-squares-40-10.png](./images/least-squares-40-10.png)
 
@@ -323,7 +459,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 拟合效果不太好，很多点相距曲线较远。同时相对正弦函数有一些误差。
 
-##### N = 40, M = 20
+#### N = 40, M = 20
 
 ![least-squares-40-20.png](./images/least-squares-40-20.png)
 
@@ -333,7 +469,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 对训练数据拟合度比较高，同时拟合曲线比较符合正弦曲线的轨迹。
 
-##### N = 40, M = 39
+#### N = 40, M = 39
 
 ![least-squares-40-39.png](./images/least-squares-40-39.png)
 
@@ -343,7 +479,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 可以看到几乎所有点都被拟合了，但是图像与正弦函数相比有较大的误差，有些地方曲线波动非常大。这就是**过拟合**现象。
 
-##### N = 20, M = 19
+#### N = 20, M = 19
 
 ![least-squares-20-19.png](./images/least-squares-20-19.png)
 
@@ -361,7 +497,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 $ make least_squares_regularization
 ```
 
-##### N = 40, M = 10
+#### N = 40, M = 10
 
 ![least-squares-regularization-40-10.png](./images/least-squares-regularization-40-10.png)
 
@@ -371,7 +507,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 对训练数据的拟合效果较差，同时相比于正弦函数误差较大，需要增加多项式系数来更好地拟合。
 
-##### N = 40, M = 20
+#### N = 40, M = 20
 
 ![least-squares-regularization-40-20.png](./images/least-squares-regularization-40-20.png)
 
@@ -381,7 +517,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 拟合效果比较好，有一些点都没有落在拟合曲线上。拟合曲线比较符合正弦的轨迹。
 
-##### N = 40, M = 39
+#### N = 40, M = 39
 
 ![least-squares-regularization-40-39.png](./images/least-squares-regularization-40-39.png)
 
@@ -391,7 +527,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 拟合效果比较好，有一些点都没有落在拟合曲线上。拟合曲线也比较符合正弦的轨迹，但不如 $M = 20$ 时，可以考虑增大 $\lambda$。
 
-##### N = 20, M = 19
+#### N = 20, M = 19
 
 ![least-squares-regularization-20-19.png](./images/least-squares-regularization-20-19.png)
 
@@ -401,11 +537,11 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 拟合效果很好，基本都落在拟合曲线上。拟合曲线有些许波动，不过比不加正则项要好许多。可以考虑进一步增大 $\lambda$ 来降低误差。
 
-#### 梯度下降法
+### 梯度下降法
 
 通过实验，我可算是理解到了梯度下降的本质：不断地调节学习率，既不能太大以确保收敛，又不能太小让计算机能在有效时间内给出结果。
 
-##### N = 4, M = 2
+#### N = 4, M = 2
 
 ![gradient-descent-4-2.png](./images/gradient-descent-4-2.png)
 
@@ -431,9 +567,62 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 $\mathrm{\mathbf{w_{ML}}} =$
 
-<object width="100%" height="80px" data="./training_results/gradient-descent-10-9.txt"></object>
+<object width="100%" height="100px" data="./training_results/gradient-descent-10-9.txt"></object>
 
 拟合效果比较好，同时曲线较好地吻合了正弦曲线。
+
+### 共轭梯度法
+
+共轭梯度法在实际求解中是对 $\mathrm{\mathbf{w}}$ 不断进行迭代的，算法描述如下：
+
+$\begin{aligned}
+&\mathrm{\mathbf{B}} = \mathrm{\mathbf{X}^T}\mathrm{\mathbf{X}} + \lambda \mathrm{\mathbf{I}_{(M+1)\times(M+1)}} \\&
+\mathrm{\mathbf{w_0}} = \mathrm{\mathbf{0}} \\&
+\mathrm{\mathbf{r_0}} = \mathrm{\mathbf{X}}^T\mathrm{\mathbf{t}} - \mathrm{\mathbf{B}}\mathrm{\mathbf{w_0}} \\&
+\mathrm{\mathbf{p_0}} = \mathrm{\mathbf{r_0}} \\&
+k = 0 \\ \\&
+while True: \\&
+\qquad \alpha _k = \frac{\mathrm{\mathbf{r_k}^T}\mathrm{\mathbf{r_k}}}{\mathrm{\mathbf{p_k}}^T\mathrm{\mathbf{B}}\mathrm{\mathbf{p_k}}} \\&
+\qquad \mathrm{\mathbf{w_{k+1}}} = \mathrm{\mathbf{w_k}} + \alpha _k\mathrm{\mathbf{p _k}} \\&
+\qquad \mathrm{\mathbf{r_{k+1}}} = \mathrm{\mathbf{r_k}} - \alpha _k\mathrm{\mathbf{B}}\mathrm{\mathbf{p _k}} \\&
+\qquad 如果 \mathrm{\mathbf{r_{k+1}}} 足够小，停止迭代 \\&
+\qquad \beta _k = \frac{\mathrm{\mathbf{r_{k+1}}^T}\mathrm{\mathbf{r_{k+1}}}}{\mathrm{\mathbf{r_k}^T}\mathrm{\mathbf{r_k}}} \\&
+\qquad \mathrm{\mathbf{p_{k+1}}} = \mathrm{\mathbf{r_{k+1}}} + \beta _k\mathrm{\mathbf{p _k}} \\&
+\qquad  k = k + 1 \\ \\&
+输出结果 \qquad \mathrm{\mathbf{w_{k+1}}}
+\end{aligned}$
+
+实际运行时发现相对于梯度下降法，迭代次数少了许多，速度明显增加。
+
+#### N = 4, M = 2
+
+![conjugate-gradient-4-2.png](./images/conjugate-gradient-4-2.png)
+
+$\mathrm{\mathbf{w_{ML}}} =$
+
+<object width="100%" height="80px" data="./training_results/conjugate-gradient-4-2.txt"></object>
+
+拟合效果不太好，也不太符合正弦曲线的特征。与梯度下降法的误差相差不大。
+
+#### N = 10, M = 3
+
+![conjugate-gradient-10-3.png](./images/conjugate-gradient-10-3.png)
+
+$\mathrm{\mathbf{w_{ML}}} =$
+
+<object width="100%" height="80px" data="./training_results/conjugate-gradient-10-3.txt"></object>
+
+同样拟合效果不太好，也不太符合正弦曲线的特征。与梯度下降法的误差相差不大。
+
+#### N = 10, M = 9
+
+![conjugate-gradient-10-9.png](./images/conjugate-gradient-10-9.png)
+
+$\mathrm{\mathbf{w_{ML}}} =$
+
+<object width="100%" height="80px" data="./training_results/conjugate-gradient-10-9.txt"></object>
+
+拟合效果很好好，符合正弦曲线的特征。与梯度下降法的误差相差不大。
 
 ## 四、结论
 
@@ -443,6 +632,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
     + 采用贝叶斯方法自动调节有效参数数量
     + 加入惩罚项 :heavy_check_mark:
 3. 梯度下降法避免了矩阵求逆过程，不过梯度的选取需要反复测试。当学习率较小的时候，运行的时候速度与最小二乘法相比慢得多；当学习率较大的时候，又可能出现不收敛的情况。
+4. 相比于梯度下降法，共轭梯度法效率要快得多。
 
 ## 五、参考文献
 
@@ -455,5 +645,379 @@ $\mathrm{\mathbf{w_{ML}}} =$
 7. **[[Gradient descent | Wikipedia](https://en.wikipedia.org/wiki/Gradient_descent)]**
 8. **[[Gradient descent](https://en.wikipedia.org/wiki/Gradient)]**
 9. **[[MATT NEDRICH 2014](https://spin.atomicobject.com/2014/06/24/gradient-descent-linear-regression/)]**
+10. **[[Conjugate gradient method | Wikipedia](https://en.wikipedia.org/wiki/Conjugate_gradient_method)]**
 
 ## 七、附录：源代码（带注释）
+
+### `data_generator.py`
+
+用于生成数据，函数可以自定义，默认使用正弦函数。其他参数参见函数前面的 docstring。
+
+```py
+import numpy
+from matplotlib.pyplot import rcParams
+
+
+def sin2PiX(x):
+    return numpy.sin(2 * numpy.pi * x)
+
+
+def generateData(func=sin2PiX, N=5000, sigma=1.0, start=-2.0, stop=2.0):
+    """Generate data with random Gaussian noise whose expectation is 0.
+
+    Parameters:
+        func -- the function used to generate data points(default sin(2pi x))
+        N -- the number of data points you want to generate (default 50)
+        sigma -- the standard deviation of the Gaussian noise (default 1.0)
+        start -- Start of interval. (default -2.0)
+        stop -- End of interval. (default 2.0)
+    Returns:
+        A dict {'xArray': array, 'tArray': array} in which each array is
+        the data points' X-axis and Y-axis
+    """
+    # 用来正常显示中文标签
+    rcParams['font.family'] = 'sans-serif'
+    rcParams['font.sans-serif'] = ['SimHei', 'Helvetica', 'Calibri']
+    # 用来正常显示负号
+    rcParams['axes.unicode_minus'] = False
+
+    # For N points, there is only have N -1 intervals
+    xArray = numpy.arange(start, stop + 0.001, (stop - start)/(N - 1))
+    yArray = numpy.array(list(map(func, xArray)))
+
+    # Random Gaussian noise
+    noise = numpy.random.normal(0.0, sigma, N)
+    # Show the noise
+    # import matplotlib.pyplot as plt
+    # count, bins, ignored = plt.hist(noise, 30, density=True)
+    # plt.plot(bins, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * 
+    #     numpy.exp( - (bins - 0)**2 / (2 * sigma**2) ),
+    #         linewidth=2, color='r')
+    # plt.show()
+
+    yArray += noise
+    return {'xArray': xArray, 'yArray': yArray}
+
+```
+
+
+### `least_squares.py`
+
+最小二乘法
+
+```py
+import sys
+from data_generator import generateData
+from data_generator import sin2PiX
+from numpy import *
+from numpy.linalg import *
+from matplotlib.pyplot import *
+
+
+def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise):
+    """A train function you can customise"""
+    print(f'Least squares: N ={numOfTraningDataPoints}, M = {orderOfPolynomial}, sigma = {sigmaOfNoise} is plotting...')
+    data = generateData(N=numOfTraningDataPoints, sigma=sigmaOfNoise)
+    vectorX_T = data['xArray']
+    vectorT_T = data['yArray']
+
+    # Plot the training data points
+    # Plot('x', 't', '', data={'x': vectorX_T, 'y': vectorT_T})
+    plot(vectorX_T, vectorT_T, 'ro')
+    xlabel('x')
+    ylabel('t')
+    ylim(bottom=-1.2, top=1.2)
+    title(f't = sin(2$\pi x$)'
+        f'最小二乘法拟合 - $N = {numOfTraningDataPoints}, '
+        f'M = {orderOfPolynomial}, \sigma = {sigmaOfNoise}$')
+
+    # Get Vandermonde matrix X, see equation (8)
+    matrixX = vander(vectorX_T, orderOfPolynomial+1, True)
+
+    # Get the transpose of w_ML, see equation (12)
+    w_ML_T = matmul(
+        matmul(vectorT_T, matrixX),
+        inv(matmul(transpose(matrixX), matrixX))
+    )
+
+    # Print the solution for polynomial coefficients to file
+    with open(f'training_results/least-squares-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+        training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(w_ML_T) + '\n\n')
+
+    # Generate shorter intervals than vectorX_T
+    vectorFittingX = arange(-2.0, 2.1, 0.000001)
+    matrixFittingX = vander(vectorFittingX, orderOfPolynomial+1, True)
+    # Plot the fitting curve, see equation (2)
+    vectorY = transpose(matmul(matrixFittingX, transpose(w_ML_T)))
+    plot(vectorFittingX, vectorY, 'g')
+    # Plot sin(2 * pi * x)
+    vector2PiX = array(list(map(sin2PiX, vectorFittingX)))
+    plot(vectorFittingX, vector2PiX, 'y')
+
+    # Save to /images
+    savefig(f'images/least-squares-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    close()
+
+
+# Run training
+
+# Case 1
+train(numOfTraningDataPoints=40, orderOfPolynomial=10, sigmaOfNoise=0.2)
+# Case 2
+train(numOfTraningDataPoints=40, orderOfPolynomial=20, sigmaOfNoise=0.2)
+# Case 3
+train(numOfTraningDataPoints=40, orderOfPolynomial=39, sigmaOfNoise=0.2)
+# Case 4
+train(numOfTraningDataPoints=20, orderOfPolynomial=19, sigmaOfNoise=0.2)
+
+```
+
+### `least_squares_regularization.py`
+
+带惩罚项的最小二乘法
+
+```py
+import sys
+from data_generator import generateData
+from data_generator import sin2PiX
+from numpy import *
+from numpy.linalg import *
+from matplotlib.pyplot import *
+
+
+def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda):
+    """A train function you can customise"""
+    print(f'Least squares regularization: N ={numOfTraningDataPoints}, M = {orderOfPolynomial}, sigma = {sigmaOfNoise}, ln(lambda) = {lnOfLambda} is plotting...')
+    data = generateData(N=numOfTraningDataPoints, sigma=sigmaOfNoise)
+    vectorX_T = data['xArray']
+    vectorT_T = data['yArray']
+
+    # Plot the training data points
+    # Plot('x', 't', '', data={'x': vectorX_T, 'y': vectorT_T})
+    plot(vectorX_T, vectorT_T, 'ro')
+    xlabel('x')
+    ylabel('t')
+    ylim(bottom=-1.2, top=1.2)
+    title(f'$t = \sin(2\pi x)$\n'
+        f'带惩罚项的最小二乘法拟合 \n $N = {numOfTraningDataPoints}, '
+        f'M = {orderOfPolynomial}, \sigma = {sigmaOfNoise}, \ln\lambda = {lnOfLambda}$')
+
+    # Get Vandermonde matrix X, see equation (8)
+    matrixX = vander(vectorX_T, orderOfPolynomial+1, True)
+    
+    # Get the transpose of w_ML, see equation (16)
+    w_ML_T = matmul(
+        matmul(vectorT_T, matrixX),
+        inv(
+            matmul(transpose(matrixX), matrixX) +
+            exp(lnOfLambda)*identity(orderOfPolynomial + 1)
+        ),
+    )
+
+    # Print the solution for polynomial coefficients to file
+    with open(f'training_results/least-squares-regularization-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+        training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(w_ML_T) + '\n\n')
+
+    # Generate shorter intervals than vectorX_T
+    vectorFittingX = arange(-2.0, 2.1, 0.000001)
+    matrixFittingX = vander(vectorFittingX, orderOfPolynomial+1, True)
+    # Plot the fitting curve, see equation (2)
+    vectorY = transpose(matmul(matrixFittingX, transpose(w_ML_T)))
+    plot(vectorFittingX, vectorY, 'g')
+    # Plot sin(2 * pi * x)
+    vector2PiX = array(list(map(sin2PiX, vectorFittingX)))
+    plot(vectorFittingX, vector2PiX, 'y')
+
+    # Save to /images
+    savefig(f'images/least-squares-regularization-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    close()
+
+
+# Run training
+
+# Case 1
+train(numOfTraningDataPoints=40, orderOfPolynomial=10, sigmaOfNoise=0.2, lnOfLambda=-18)
+# Case 2
+train(numOfTraningDataPoints=40, orderOfPolynomial=20, sigmaOfNoise=0.2, lnOfLambda=-18)
+# Case 3
+train(numOfTraningDataPoints=40, orderOfPolynomial=39, sigmaOfNoise=0.2, lnOfLambda=-18)
+# Case 4
+train(numOfTraningDataPoints=20, orderOfPolynomial=19, sigmaOfNoise=0.2, lnOfLambda=-18)
+```
+
+### `gradient_descent.py`
+
+梯度下降法
+
+```py
+import sys
+from data_generator import generateData
+from data_generator import sin2PiX
+from numpy import *
+from numpy.linalg import *
+from matplotlib.pyplot import *
+
+
+def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, learningRate, precision):
+    """A train function you can customise (use gradient descient)"""
+    print(f'Gradient descient: N ={numOfTraningDataPoints}, '
+        f'M = {orderOfPolynomial}, '
+        f'sigma = {sigmaOfNoise} is plotting...')
+    data = generateData(N=numOfTraningDataPoints, sigma=sigmaOfNoise)
+    vectorX_T = data['xArray']
+    vectorT_T = data['yArray']
+
+    # Plot the training data points
+    # Plot('x', 't', '', data={'x': vectorX_T, 'y': vectorT_T})
+    plot(vectorX_T, vectorT_T, 'ro')
+    xlabel('x')
+    ylabel('t')
+    ylim(bottom=-1.2, top=1.2)
+
+    # Get Vandermonde matrix X, see equation (8)
+    matrixX = vander(vectorX_T, orderOfPolynomial+1, True)
+
+    # Gradient function
+    def gradient(w):
+        return matmul(
+            transpose(matrixX),
+            matmul(matrixX, w) - vectorT_T.reshape(-1, 1)
+            ) + exp(lnOfLambda) * w
+
+    # Initialize the polynomial with ones
+    cur_w = ones((orderOfPolynomial + 1, 1))
+    previous_step_size = 1
+    iters = 0
+    while previous_step_size > precision:
+        learning = gradient(cur_w) * learningRate
+        cur_w -= learning
+        previous_step_size = linalg.norm(learning)
+        print('Current learning: ', previous_step_size)
+        iters += 1
+
+
+    title(f't = sin(2$\pi x$)\n'
+        f'梯度下降法拟合 \n N = {numOfTraningDataPoints},'
+        f'M = {orderOfPolynomial}, $\sigma$ = {sigmaOfNoise}, 学习率 $\\alpha$ = {learningRate}, 截止步长 = {precision}\n'
+        f'迭代次数: {iters} 次')
+
+    # Print the solution for polynomial coefficients to file
+    with open(f'training_results/gradient-descent-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+        training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(transpose(cur_w).reshape(-1)) + '\n\n')
+
+    # Generate shorter intervals than vectorX_T
+    vectorFittingX = arange(-2.0, 2.1, 0.000001)
+    matrixFittingX = vander(vectorFittingX, orderOfPolynomial+1, True)
+    # Plot the fitting curve, see equation (2)
+    vectorY = transpose(matmul(matrixFittingX, cur_w)).reshape(-1)
+    plot(vectorFittingX, vectorY, 'g')
+    # Plot sin(2 * pi * x)
+    vector2PiX = array(list(map(sin2PiX, vectorFittingX)))
+    plot(vectorFittingX, vector2PiX, 'y')
+
+    # Save to /images
+    savefig(f'images/gradient-descent-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    close()
+    print(f'Done! iteration times: {iters}')
+
+
+# Run training
+
+# Case 1
+train(numOfTraningDataPoints=4, orderOfPolynomial=2, sigmaOfNoise=0.2, lnOfLambda=-5, learningRate=0.01, precision=1e-10)
+
+# Case 2
+train(numOfTraningDataPoints=10, orderOfPolynomial=3, sigmaOfNoise=0.2, lnOfLambda=-5, learningRate=0.01, precision=1e-10)
+
+# Case 3
+train(numOfTraningDataPoints=10, orderOfPolynomial=9, sigmaOfNoise=0.2, lnOfLambda=-5, learningRate=0.000002, precision=1e-6)
+```
+
+### `conjugate_gradient.py`
+
+共轭梯度法
+
+```py
+import sys
+from data_generator import generateData
+from data_generator import sin2PiX
+from numpy import *
+from numpy.linalg import *
+from matplotlib.pyplot import *
+
+
+def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, precision):
+    """A train function you can customise (use conjugate gradient)"""
+    print(f'Least squares: N ={numOfTraningDataPoints}, M = {orderOfPolynomial}, sigma = {sigmaOfNoise} is plotting...')
+    data = generateData(N=numOfTraningDataPoints, sigma=sigmaOfNoise)
+    vectorX_T = data['xArray']
+    vectorT_T = data['yArray']
+
+    # Plot the training data points
+    # Plot('x', 't', '', data={'x': vectorX_T, 'y': vectorT_T})
+    plot(vectorX_T, vectorT_T, 'ro')
+    xlabel('x')
+    ylabel('t')
+    ylim(bottom=-1.2, top=1.2)
+
+    # Get Vandermonde matrix X, see equation (8)
+    matrixX = vander(vectorX_T, orderOfPolynomial+1, True)
+
+    # Get matrix B, see equation (20)
+    matrixB = matmul(transpose(matrixX), matrixX) + exp(lnOfLambda) * identity(orderOfPolynomial + 1)
+    # Initialize variables
+    w = zeros((orderOfPolynomial+1, 1))
+    r = matmul(transpose(matrixX), vectorT_T.reshape(-1, 1)) - matmul(matrixB, w)
+    p = r
+    k = 0
+    # Begin iterating
+    while True:
+        alpha = matmul(transpose(r), r) / matmul(matmul(transpose(p), matrixB), p)
+        new_w = w + alpha * p
+        new_r = r - alpha * matmul(matrixB, p)
+        # Exit if new_r is small enough
+        if(linalg.norm(new_r) < precision):
+            w = new_w
+            break
+        beta = matmul(transpose(new_r), new_r) / matmul(transpose(r), r)
+        new_p = new_r + beta * p
+        
+        w = new_w
+        r = new_r
+        p = new_p
+        k = k+1
+
+    # Print the solution for polynomial coefficients to file
+    with open(f'training_results/conjugate-gradient-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+        training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(transpose(w)) + '\n\n')
+
+    title(f't = sin(2$\pi x$)\n'
+        f'共轭梯度法 - $N = {numOfTraningDataPoints}, '
+        f'M = {orderOfPolynomial}, \sigma = {sigmaOfNoise}, \ln\lambda = {lnOfLambda}, precision = {precision}$\n'
+        f'迭代次数: {k} 次')
+    # Generate shorter intervals than vectorX_T
+    vectorFittingX = arange(-2.0, 2.1, 0.000001)
+    matrixFittingX = vander(vectorFittingX, orderOfPolynomial+1, True)
+    # Plot the fitting curve, see equation (2)
+    vectorY = transpose(matmul(matrixFittingX, w.reshape(-1)))
+    plot(vectorFittingX, vectorY, 'g')
+    # Plot sin(2 * pi * x)
+    vector2PiX = array(list(map(sin2PiX, vectorFittingX)))
+    plot(vectorFittingX, vector2PiX, 'y')
+
+    # Save to /images
+    savefig(f'images/conjugate-gradient-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    close()
+
+
+# Run training
+
+# Case 1
+train(numOfTraningDataPoints=4, orderOfPolynomial=2, sigmaOfNoise=0.2, lnOfLambda=-5, precision=1e-10)
+
+# Case 2
+train(numOfTraningDataPoints=10, orderOfPolynomial=3, sigmaOfNoise=0.2, lnOfLambda=-5, precision=1e-10)
+
+# Case 3
+train(numOfTraningDataPoints=10, orderOfPolynomial=9, sigmaOfNoise=0.2, lnOfLambda=-5, precision=1e-6)
+```
