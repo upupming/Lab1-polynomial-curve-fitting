@@ -1,57 +1,58 @@
 
 # <center>机器学习实验报告一——多项式拟合正弦函数</center>
 
-李一鸣
-
+李一鸣  
 2018 年 9 月 25 日
 
-https://upupming.site/Lab1-polynomial-curve-fitting/README.html
+网址：https://upupming.site/Lab1-polynomial-curve-fitting/README.html  
+源代码：https://github.com/upupming/Lab1-polynomial-curve-fitting
 
 - [<center>机器学习实验报告一——多项式拟合正弦函数</center>](#center%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E4%B8%80%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88%E6%AD%A3%E5%BC%A6%E5%87%BD%E6%95%B0center)
 - [多项式拟合正弦函数](#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88%E6%AD%A3%E5%BC%A6%E5%87%BD%E6%95%B0)
-  - [〇、数学符号格式规范](#%E3%80%87%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83)
-  - [一、实验目的](#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84)
-  - [二、实验要求及实验环境](#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82%E5%8F%8A%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83)
-    - [实验要求](#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82)
-    - [实验环境](#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83)
-      - [硬件](#%E7%A1%AC%E4%BB%B6)
-      - [软件](#%E8%BD%AF%E4%BB%B6)
-  - [三、设计思想](#%E4%B8%89%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3)
-    - [算法原理](#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86)
-      - [生成数据](#%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE)
-      - [最小二乘法](#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
-        - [误差函数 $E(\mathrm{\mathbf{w}})$](#%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0-emathrmmathbfw)
-        - [最小化误差函数求得最优解 $\mathrm{\mathbf{w_{ML}}}$](#%E6%9C%80%E5%B0%8F%E5%8C%96%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0%E6%B1%82%E5%BE%97%E6%9C%80%E4%BC%98%E8%A7%A3-mathrmmathbfwml)
-      - [带惩罚项的最小二乘法](#%E5%B8%A6%E6%83%A9%E7%BD%9A%E9%A1%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
-      - [梯度下降法](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)
-      - [共轭梯度法](#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95)
-  - [三、实验结果与分析](#%E4%B8%89%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%88%86%E6%9E%90)
-    - [最小二乘法](#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
-      - [N = 40, M = 10](#n--40-m--10)
-      - [N = 40, M = 20](#n--40-m--20)
-      - [N = 40, M = 39](#n--40-m--39)
-      - [N = 20, M = 19](#n--20-m--19)
-    - [带惩罚项的最小二乘法](#%E5%B8%A6%E6%83%A9%E7%BD%9A%E9%A1%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
-      - [N = 40, M = 10](#n--40-m--10)
-      - [N = 40, M = 20](#n--40-m--20)
-      - [N = 40, M = 39](#n--40-m--39)
-      - [N = 20, M = 19](#n--20-m--19)
-    - [梯度下降法](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)
-      - [N = 4, M = 2](#n--4-m--2)
-      - [N = 10, M = 3](#n--10-m--3)
-      - [N = 10, M = 9](#n--10-m--9)
-    - [共轭梯度法](#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95)
-      - [N = 4, M = 2](#n--4-m--2)
-      - [N = 10, M = 3](#n--10-m--3)
-      - [N = 10, M = 9](#n--10-m--9)
-  - [四、结论](#%E5%9B%9B%E7%BB%93%E8%AE%BA)
-  - [五、参考文献](#%E4%BA%94%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE)
-  - [七、附录：源代码（带注释）](#%E4%B8%83%E9%99%84%E5%BD%95%E6%BA%90%E4%BB%A3%E7%A0%81%E5%B8%A6%E6%B3%A8%E9%87%8A)
-    - [`data_generator.py`](#datageneratorpy)
-    - [`least_squares.py`](#leastsquarespy)
-    - [`least_squares_regularization.py`](#leastsquaresregularizationpy)
-    - [`gradient_descent.py`](#gradientdescentpy)
-    - [`conjugate_gradient.py`](#conjugategradientpy)
+    - [〇、数学符号格式规范](#%E3%80%87%E6%95%B0%E5%AD%A6%E7%AC%A6%E5%8F%B7%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83)
+    - [一、实验目的](#%E4%B8%80%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84)
+    - [二、实验要求及实验环境](#%E4%BA%8C%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82%E5%8F%8A%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83)
+        - [实验要求](#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82)
+        - [实验环境](#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83)
+            - [硬件](#%E7%A1%AC%E4%BB%B6)
+            - [软件](#%E8%BD%AF%E4%BB%B6)
+    - [三、设计思想](#%E4%B8%89%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3)
+        - [算法原理](#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86)
+            - [生成数据](#%E7%94%9F%E6%88%90%E6%95%B0%E6%8D%AE)
+            - [最小二乘法](#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+                - [误差函数 $E(\mathrm{\mathbf{w}})$](#%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0-emathrmmathbfw)
+                - [最小化误差函数求得最优解 $\mathrm{\mathbf{w_{ML}}}$](#%E6%9C%80%E5%B0%8F%E5%8C%96%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0%E6%B1%82%E5%BE%97%E6%9C%80%E4%BC%98%E8%A7%A3-mathrmmathbfwml)
+            - [带惩罚项的最小二乘法](#%E5%B8%A6%E6%83%A9%E7%BD%9A%E9%A1%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+            - [梯度下降法](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)
+            - [共轭梯度法](#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95)
+    - [四、实验结果与分析](#%E5%9B%9B%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%88%86%E6%9E%90)
+        - [最小二乘法](#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+            - [N = 40, M = 10](#n--40-m--10)
+            - [N = 40, M = 20](#n--40-m--20)
+            - [N = 40, M = 39](#n--40-m--39)
+            - [N = 20, M = 19](#n--20-m--19)
+        - [带惩罚项的最小二乘法](#%E5%B8%A6%E6%83%A9%E7%BD%9A%E9%A1%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95)
+            - [N = 40, M = 10](#n--40-m--10)
+            - [N = 40, M = 20](#n--40-m--20)
+            - [N = 40, M = 39](#n--40-m--39)
+            - [N = 20, M = 19](#n--20-m--19)
+        - [梯度下降法](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)
+            - [N = 4, M = 2](#n--4-m--2)
+            - [N = 10, M = 3](#n--10-m--3)
+            - [N = 10, M = 9](#n--10-m--9)
+        - [共轭梯度法](#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95)
+            - [N = 4, M = 2](#n--4-m--2)
+            - [N = 10, M = 3](#n--10-m--3)
+            - [N = 10, M = 9](#n--10-m--9)
+    - [五、结论](#%E4%BA%94%E7%BB%93%E8%AE%BA)
+    - [六、参考文献](#%E5%85%AD%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE)
+    - [七、附录：源代码](#%E4%B8%83%E9%99%84%E5%BD%95%E6%BA%90%E4%BB%A3%E7%A0%81)
+        - [`data_generator.py`](#datageneratorpy)
+        - [`least_squares.py`](#leastsquarespy)
+        - [`least_squares_regularization.py`](#leastsquaresregularizationpy)
+        - [`gradient_descent.py`](#gradientdescentpy)
+        - [`conjugate_gradient.py`](#conjugategradientpy)
+
 
 # 多项式拟合正弦函数
 
@@ -438,7 +439,7 @@ $$(26)
 
 总结：利用共轭梯度法我们可以从 $\mathrm{\mathbf{p_0}}$ 开始逐渐向初始点的共轭方向逼近，加快求解效率。最优解由式 (20)、式 (21)、式 (26) 给出。
 
-## 三、实验结果与分析
+## 四、实验结果与分析
 
 ### 最小二乘法
 
@@ -541,6 +542,12 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 通过实验，我可算是理解到了梯度下降的本质：不断地调节学习率，既不能太大以确保收敛，又不能太小让计算机能在有效时间内给出结果。
 
+运行命令：
+
+```
+$ make gradient_descent
+```
+
 #### N = 4, M = 2
 
 ![gradient-descent-4-2.png](./images/gradient-descent-4-2.png)
@@ -594,6 +601,12 @@ while True: \\&
 
 实际运行时发现相对于梯度下降法，迭代次数少了许多，速度明显增加。
 
+运行命令：
+
+```
+$ make conjugate_gradient
+```
+
 #### N = 4, M = 2
 
 ![conjugate-gradient-4-2.png](./images/conjugate-gradient-4-2.png)
@@ -620,11 +633,11 @@ $\mathrm{\mathbf{w_{ML}}} =$
 
 $\mathrm{\mathbf{w_{ML}}} =$
 
-<object width="100%" height="80px" data="./training_results/conjugate-gradient-10-9.txt"></object>
+<object width="100%" height="100px" data="./training_results/conjugate-gradient-10-9.txt"></object>
 
-拟合效果很好好，符合正弦曲线的特征。与梯度下降法的误差相差不大。
+拟合效果很好，符合正弦曲线的特征。与梯度下降法的误差相差不大。
 
-## 四、结论
+## 五、结论
 
 1. 最小二乘法需要计算矩阵的逆效率较慢。
 2. 最小二乘法中多项式阶数 $M$ 越大，拟合效果越好，但可能会出现过拟合现象，主要的解决办法有：
@@ -634,7 +647,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 3. 梯度下降法避免了矩阵求逆过程，不过梯度的选取需要反复测试。当学习率较小的时候，运行的时候速度与最小二乘法相比慢得多；当学习率较大的时候，又可能出现不收敛的情况。
 4. 相比于梯度下降法，共轭梯度法效率要快得多。
 
-## 五、参考文献
+## 六、参考文献
 
 1. **[Bishop 2006]** Christopher M. Bishop, Pattern Recognition and Machine Learning, Springer, 2006.
 2. **[[Least squares | Wikipedia](https://en.wikipedia.org/wiki/Least_squares)]**
@@ -647,7 +660,7 @@ $\mathrm{\mathbf{w_{ML}}} =$
 9. **[[MATT NEDRICH 2014](https://spin.atomicobject.com/2014/06/24/gradient-descent-linear-regression/)]**
 10. **[[Conjugate gradient method | Wikipedia](https://en.wikipedia.org/wiki/Conjugate_gradient_method)]**
 
-## 七、附录：源代码（带注释）
+## 七、附录：源代码
 
 ### `data_generator.py`
 

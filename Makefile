@@ -1,4 +1,4 @@
-all: least_squares least_squares_regularization gradient_descent
+all: least_squares least_squares_regularization gradient_descent conjugate_gradient
 
 clean:
 	rm -rf ./training_results ./images
