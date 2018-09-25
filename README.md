@@ -247,9 +247,10 @@ $$(9)
 
 $$
 \begin{aligned}
-  \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\mathrm{\mathbf{w}}}{\partial\mathrm{\mathbf{w}}} = \mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}} + \mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}^T  \\ \\
-  \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}}{\mathrm{\mathbf{w}}} = \frac{\partial\mathrm{\mathbf{w}}\mathrm{\mathbf{A}^T}}{\mathrm{\mathbf{w}}} = \mathrm{\mathbf{A}}^T
-\end{aligned}
+  \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\mathrm{\mathbf{w}}}{\partial\mathrm{\mathbf{w}}} &= 2\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\\ \\
+  \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}}{\mathrm{\mathbf{w}}} &= \frac{\partial\mathrm{\mathbf{A}^T}\mathrm{\mathbf{w}}}{\mathrm{\mathbf{w}}} = \mathrm{\mathbf{A}}^T
+\end{aligned} \\ \\
+\text{（注：当分母、分子布局一样应该将分母进行转置之后再计算；这两个求导法则非常经典，读者可以尝试推导一下）}
 $$(10)
 
 对 $\mathrm{\mathbf{w}}$ 求导，得：
@@ -539,6 +540,8 @@ $\mathrm{\mathbf{w_{ML}}} =$
 拟合效果很好，基本都落在拟合曲线上。拟合曲线有些许波动，不过比不加正则项要好许多。可以考虑进一步增大 $\lambda$ 来降低误差。
 
 ### 梯度下降法
+
+由于 $\lambda = 0$ 时等价于没有惩罚项，而确实在惩罚项存在时过拟合能被较好地避免，下面只考虑 $\ln \lambda = -0.5$ 的情况如果感兴趣，可自行在 `gradient_descent` 增加指定参数的测试用例。
 
 通过实验，我可算是理解到了梯度下降的本质：不断地调节学习率，既不能太大以确保收敛，又不能太小让计算机能在有效时间内给出结果。
 
