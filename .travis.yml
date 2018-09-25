@@ -9,7 +9,7 @@ script:
   - git config --global user.email "upupming@gmail.com"
   - git add images training_results
   - git commit -m "Built images & training results with travis-ci"
-  - git push GH_REF
+  - git push ${GH_REF}
 
 env: 
  global:
