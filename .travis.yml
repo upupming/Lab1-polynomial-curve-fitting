@@ -7,10 +7,11 @@ script:
   - make > make-log.txt
   - git config --global user.name "upupming"
   - git config --global user.email "upupming@gmail.com"
+  - git checkout master
   - git add images training_results
   - git commit -m "Built images & training results with travis-ci"
   - git push ${GH_REF}
 
 env: 
  global:
-   - GH_REF: https://${GH_TOKEN}@github.com/upupming/Lab1-polynomial-curve-fitting.git 
+   - GH_REF: https://upupming:${GH_TOKEN}@github.com/upupming/Lab1-polynomial-curve-fitting
