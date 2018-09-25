@@ -8,7 +8,7 @@ from matplotlib.pyplot import *
 
 def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, precision):
     """A train function you can customise (use conjugate gradient)"""
-    print(f'Least squares: N ={numOfTraningDataPoints}, M = {orderOfPolynomial}, sigma = {sigmaOfNoise} is plotting...')
+    print(f'Conjugate gradient: N ={numOfTraningDataPoints}, M = {orderOfPolynomial}, sigma = {sigmaOfNoise} is plotting...')
     data = generateData(N=numOfTraningDataPoints, sigma=sigmaOfNoise)
     vectorX_T = data['xArray']
     vectorT_T = data['yArray']
