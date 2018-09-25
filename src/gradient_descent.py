@@ -46,25 +46,25 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, l
 
     title(f't = sin(2$\\pi x$)\n'
         f'梯度下降法拟合 \n N = {numOfTraningDataPoints},'
-        f'M = {orderOfPolynomial}, $\\sigma$ = {sigmaOfNoise}, 学习率 $\\alpha$ = {learningRate}, 截止步长 = {precision}\n'
+        f'M = {orderOfPolynomial}, $\\sigma = {sigmaOfNoise}, \\ln\\lambda = {lnOfLambda}, $学习率$ \\alpha$ = {learningRate}, 截止步长 = {precision}\n'
         f'迭代次数: {iters} 次')
 
     # Print the solution for polynomial coefficients to file
-    with open(f'training_results/gradient-descent-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+    with open(f'../training_results/gradient-descent-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
         training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(transpose(cur_w).reshape(-1)) + '\n\n')
 
     # Generate shorter intervals than vectorX_T
     vectorFittingX = arange(-2.0, 2.1, 0.000001)
     matrixFittingX = vander(vectorFittingX, orderOfPolynomial+1, True)
     # Plot the fitting curve, see equation (2)
-    vectorY = transpose(matmul(matrixFittingX, cur_w)).reshape(-1)
+    vectorY = transpose(matmul(matrixFittingX, cur_w.reshape(-1)))
     plot(vectorFittingX, vectorY, 'g')
     # Plot sin(2 * pi * x)
     vector2PiX = array(list(map(sin2PiX, vectorFittingX)))
     plot(vectorFittingX, vector2PiX, 'y')
 
     # Save to /images
-    savefig(f'images/gradient-descent-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    savefig(f'../images/gradient-descent-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
     close()
     print(f'Done! iteration times: {iters}')
 

@@ -48,8 +48,8 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, p
         k = k+1
 
     # Print the solution for polynomial coefficients to file
-    with open(f'training_results/conjugate-gradient-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
-        training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(transpose(w)) + '\n\n')
+    with open(f'../training_results/conjugate-gradient-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+        training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(w.reshape(-1)) + '\n\n')
 
     title(f't = sin(2$\\pi x$)\n'
         f'共轭梯度法 - $N = {numOfTraningDataPoints}, '
@@ -66,7 +66,7 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda, p
     plot(vectorFittingX, vector2PiX, 'y')
 
     # Save to /images
-    savefig(f'images/conjugate-gradient-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    savefig(f'../images/conjugate-gradient-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
     close()
 
 

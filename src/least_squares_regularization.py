@@ -36,7 +36,7 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda):
     )
 
     # Print the solution for polynomial coefficients to file
-    with open(f'training_results/least-squares-regularization-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
+    with open(f'../training_results/least-squares-regularization-{numOfTraningDataPoints}-{orderOfPolynomial}.txt', 'w+') as training_results:
         training_results.write(f'[w_0 w_1 ... w_{orderOfPolynomial}] = \n\t' + str(w_ML_T) + '\n\n')
 
     # Generate shorter intervals than vectorX_T
@@ -50,7 +50,7 @@ def train(numOfTraningDataPoints, orderOfPolynomial, sigmaOfNoise, lnOfLambda):
     plot(vectorFittingX, vector2PiX, 'y')
 
     # Save to /images
-    savefig(f'images/least-squares-regularization-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
+    savefig(f'../images/least-squares-regularization-{numOfTraningDataPoints}-{orderOfPolynomial}.png', bbox_inches='tight')
     close()
 
 
