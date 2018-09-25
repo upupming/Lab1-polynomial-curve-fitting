@@ -1,2 +1,4 @@
 .notes/
 __pycache__/
+_book/
+node_modules/
