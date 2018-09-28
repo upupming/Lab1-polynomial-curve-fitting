@@ -247,11 +247,14 @@ $$(9)
 
 $$
 \begin{aligned}
-  \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\mathrm{\mathbf{w}}}{\partial\mathrm{\mathbf{w}}} &= 2\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\\ \\
+  \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\mathrm{\mathbf{w}}}{\partial\mathrm{\mathbf{w}}} &= 2\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}\\ \\ 
   \frac{\partial\mathrm{\mathbf{w}}^T\mathrm{\mathbf{A}}}{\mathrm{\mathbf{w}}} &= \frac{\partial\mathrm{\mathbf{A}^T}\mathrm{\mathbf{w}}}{\mathrm{\mathbf{w}}} = \mathrm{\mathbf{A}}^T
 \end{aligned} \\ \\
 \text{（注：当分母、分子布局一样应该将分母进行转置之后再计算；这两个求导法则非常经典，读者可以尝试推导一下）}
-$$(10)
+\tag{10}
+$$
+
+<br>
 
 对 $\mathrm{\mathbf{w}}$ 求导，得：
 
@@ -338,7 +341,7 @@ $$(16)
   1. 初始化 $x = 0$ （任意值都可以），给定精确度 $\alpha = 0.2$
   2. $f'(0) < 0$，令 $x = x + \alpha = 0.2$
   3. $f'(0.2) < 0$，令 $x = x + \alpha = 0.4$
-  4. $f'(0.4) > 0$，令 $x = x + \alpha = 0.6$
+  4. $f'(0.4) < 0$，令 $x = x + \alpha = 0.6$
   5. $f'(0.6) > 0$，令 $x = x - \alpha = 0.4$
 </div>
 
